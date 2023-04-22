@@ -14,6 +14,8 @@ import random
 import pickle
 import re
 
+random.seed(777)
+
 wordnet = {}
 with open("wordnet.pickle", "rb") as f:
 	wordnet = pickle.load(f)
