@@ -14,10 +14,8 @@ import random
 import pickle
 import re
 
-random.seed(777)
-
 wordnet = {}
-with open("wordnet.pickle", "rb") as f:
+with open("augmentation\wordnet.pickle", "rb") as f:
 	wordnet = pickle.load(f)
 
 
@@ -36,11 +34,13 @@ def get_only_hangul(line):
 def synonym_replacement(words, n):
 	new_words = words.copy()
 	random_word_list = list(set([word for word in words]))
+	random.seed(1)
 	random.shuffle(random_word_list)
 	num_replaced = 0
 	for random_word in random_word_list:
 		synonyms = get_synonyms(random_word)
 		if len(synonyms) >= 1:
+			random.seed(1)
 			synonym = random.choice(list(synonyms))
 			new_words = [synonym if word == random_word else word for word in new_words]
 			num_replaced += 1
@@ -73,17 +73,19 @@ def get_synonyms(word):
 # Random deletion
 # Randomly delete words from the sentence with probability p
 ########################################################################
-def random_deletion(words, p):
+def random_deletion(words, p):	
 	if len(words) == 1:
 		return words
 
 	new_words = []
 	for word in words:
+		random.seed(1)
 		r = random.uniform(0, 1)
 		if r > p:
 			new_words.append(word)
 
 	if len(new_words) == 0:
+		random.seed(1)
 		rand_int = random.randint(0, len(words)-1)
 		return [words[rand_int]]
 
@@ -101,11 +103,13 @@ def random_swap(words, n):
 	return new_words
 
 def swap_word(new_words):
+	random.seed(1)
 	random_idx_1 = random.randint(0, len(new_words)-1)
 	random_idx_2 = random_idx_1
 	counter = 0
 
 	while random_idx_2 == random_idx_1:
+		random.seed(1)
 		random_idx_2 = random.randint(0, len(new_words)-1)
 		counter += 1
 		if counter > 3:
@@ -126,11 +130,12 @@ def random_insertion(words, n):
 	return new_words
 
 
-def add_word(new_words):
+def add_word(new_words):	
 	synonyms = []
 	counter = 0
 	while len(synonyms) < 1:
 		if len(new_words) >= 1:
+			random.seed(1)
 			random_word = new_words[random.randint(0, len(new_words)-1)]
 			synonyms = get_synonyms(random_word)
 			counter += 1
@@ -141,6 +146,7 @@ def add_word(new_words):
 			return
 		
 	random_synonym = synonyms[0]
+	random.seed(1)
 	random_idx = random.randint(0, len(new_words)-1)
 	new_words.insert(random_idx, random_synonym)
 
@@ -149,7 +155,7 @@ def add_word(new_words):
 def EDA(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9):
 	sentence = get_only_hangul(sentence)
 	words = sentence.split(' ')
-	words = [word for word in words if word is not ""]
+	words = [word for word in words if word != ""]
 	num_words = len(words)
 
 	augmented_sentences = []
@@ -180,12 +186,14 @@ def EDA(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9)
 		augmented_sentences.append(" ".join(a_words))
 
 	augmented_sentences = [get_only_hangul(sentence) for sentence in augmented_sentences]
+	random.seed(1)
 	random.shuffle(augmented_sentences)
 
 	if num_aug >= 1:
 		augmented_sentences = augmented_sentences[:num_aug]
 	else:
 		keep_prob = num_aug / len(augmented_sentences)
+		random.seed(1)
 		augmented_sentences = [s for s in augmented_sentences if random.uniform(0, 1) < keep_prob]
 
 	augmented_sentences.append(sentence)
