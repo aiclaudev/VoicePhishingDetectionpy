@@ -23,7 +23,6 @@ if __name__ == '__main__' :
 
     print("number of total data : ", len(total))
     
-    random.seed(1)
     voice_phishing_train = random.sample(total, 220)
     voice_phishing_test = [v for v in total if v not in voice_phishing_train]
     print("number of voice phishing train data : ", len(voice_phishing_train))
@@ -76,7 +75,6 @@ if __name__ == '__main__' :
 # ----------------------------------------------------------------------------------------------------------------
     
     normal_df = pd.read_csv('data/source_data/normal.csv')
-    random.seed(1)
     normal_all = random.sample(list(normal_df['sentence']), 5000)
     
     normal_all_token = [mecab.nouns(w) for w in normal_all]
@@ -91,11 +89,9 @@ if __name__ == '__main__' :
             tmp1.append(tmp2)
     normal_all_token = tmp1[:]
 
-    random.seed(1)
     normal_train_token = random.sample(normal_all_token, len(voice_phishing_train_token))
     normal_test_token = [v for v in normal_all_token if v not in normal_train_token]
 
-    random.seed(1)
     normal_test_token = random.sample(normal_test_token, len(voice_phishing_test_token))
     
     print("number of normal train data after preprocessing : ",len(voice_phishing_train_token))
