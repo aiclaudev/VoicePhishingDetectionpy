@@ -1,2 +1,4 @@
 data
 *.pyc
+test.py
+compare_train_test.txt
