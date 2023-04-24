@@ -49,6 +49,16 @@ if __name__ == '__main__' :
     voice_phishing_train_token = [mecab.nouns(w) for w in voice_phishing_train_augmented]
     voice_phishing_test_token = [mecab.nouns(w) for w in voice_phishing_test_augmented]
 
+    # save txt to test deplication
+    voice_phishing_train_token_tmp = [' '.join(v)+'\n' for v in voice_phishing_train_token]
+    voice_phishing_test_token_tmp = [' '.join(v)+'\n' for v in voice_phishing_test_token]
+
+    with open('data/augmented_data/voice_train.txt', 'w', encoding='UTF8') as f:
+        f.writelines(voice_phishing_train_token_tmp)
+    with open('data/augmented_data/voice_test.txt', 'w', encoding='UTF8') as f:
+        f.writelines(voice_phishing_test_token_tmp)
+    
+
     tmp1 = []
     for i in range(len(voice_phishing_train_token)) :
         tmp2 = []
@@ -94,6 +104,15 @@ if __name__ == '__main__' :
 
     normal_test_token = random.sample(normal_test_token, len(voice_phishing_test_token))
     
+
+    normal_train_token_tmp = [' '.join(v)+'\n' for v in normal_train_token]
+    normal_test_token_tmp = [' '.join(v)+'\n' for v in normal_test_token]
+
+    with open('data/augmented_data/normal_train.txt', 'w', encoding='UTF8') as f:
+        f.writelines(normal_train_token_tmp)
+    with open('data/augmented_data/normal_test.txt', 'w', encoding='UTF8') as f:
+        f.writelines(normal_test_token_tmp)
+
     print("number of normal train data after preprocessing : ",len(voice_phishing_train_token))
     print("number of normal test data after preprocessing : ",len(voice_phishing_test_token))
     
@@ -111,18 +130,3 @@ if __name__ == '__main__' :
         pickle.dump(normal_train_token, f)
     with open('data/augmented_data/normal_test.pickle', 'wb') as f:
         pickle.dump(normal_test_token, f)
-
-    # save txt
-    voice_phishing_train_token = [' '.join(v)+'\n' for v in voice_phishing_train_token]
-    voice_phishing_test_token = [' '.join(v)+'\n' for v in voice_phishing_test_token]
-    normal_train_token = [' '.join(v)+'\n' for v in normal_train_token]
-    normal_test_token = [' '.join(v)+'\n' for v in normal_test_token]
-
-    with open('data/augmented_data/voice_train.txt', 'w', encoding='UTF8') as f:
-        f.writelines(voice_phishing_train_token)
-    with open('data/augmented_data/voice_test.txt', 'w', encoding='UTF8') as f:
-        f.writelines(voice_phishing_test_token)
-    with open('data/augmented_data/normal_train.txt', 'w', encoding='UTF8') as f:
-        f.writelines(normal_train_token)
-    with open('data/augmented_data/normal_test.txt', 'w', encoding='UTF8') as f:
-        f.writelines(normal_test_token)
