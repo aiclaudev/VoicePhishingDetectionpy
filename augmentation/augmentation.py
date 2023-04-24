@@ -28,6 +28,26 @@ if __name__ == '__main__' :
     print("number of voice phishing train data : ", len(voice_phishing_train))
     print("number of voice phishing test data : ", len(voice_phishing_test))
 
+    # save txt to test deplication
+    mecab = Mecab()
+    voice_phishing_train_token_tmp = [mecab.nouns(w) for w in voice_phishing_train]
+    voice_phishing_test_token_tmp = [mecab.nouns(w) for w in voice_phishing_test]
+
+    voice_phishing_train_token_tmp = [' '.join(w)+'\n' for w in voice_phishing_train_token_tmp]
+    voice_phishing_test_token_tmp = [' '.join(w)+'\n' for w in voice_phishing_test_token_tmp]
+
+    print("number of train data for duplication test : ", len(voice_phishing_train_token_tmp))
+    print("number of test data for duplication test : ", len(voice_phishing_test_token_tmp))
+
+    with open('data/duplication_test_data/voice_train.txt', 'w', encoding='UTF8') as f:
+        f.writelines(voice_phishing_train_token_tmp)
+    with open('data/duplication_test_data/voice_test.txt', 'w', encoding='UTF8') as f:
+        f.writelines(voice_phishing_test_token_tmp)
+    
+    del voice_phishing_train_token_tmp
+    del voice_phishing_test_token_tmp
+
+
     voice_phishing_train_augmented = []
     voice_phishing_test_augmented = []
 
@@ -44,20 +64,8 @@ if __name__ == '__main__' :
     print("number of voice phishing train data after EDA : ", len(voice_phishing_train_augmented))
     print("number of voice phishing test data after EDA : ", len(voice_phishing_test_augmented))
 
-    
-    mecab = Mecab()
     voice_phishing_train_token = [mecab.nouns(w) for w in voice_phishing_train_augmented]
-    voice_phishing_test_token = [mecab.nouns(w) for w in voice_phishing_test_augmented]
-
-    # save txt to test deplication
-    voice_phishing_train_token_tmp = [' '.join(v)+'\n' for v in voice_phishing_train_token]
-    voice_phishing_test_token_tmp = [' '.join(v)+'\n' for v in voice_phishing_test_token]
-
-    with open('data/duplication_test_data/voice_train.txt', 'w', encoding='UTF8') as f:
-        f.writelines(voice_phishing_train_token_tmp)
-    with open('data/duplication_test_data/voice_test.txt', 'w', encoding='UTF8') as f:
-        f.writelines(voice_phishing_test_token_tmp)
-    
+    voice_phishing_test_token = [mecab.nouns(w) for w in voice_phishing_test_augmented]    
 
     tmp1 = []
     for i in range(len(voice_phishing_train_token)) :
@@ -103,15 +111,6 @@ if __name__ == '__main__' :
     normal_test_token = [v for v in normal_all_token if v not in normal_train_token]
 
     normal_test_token = random.sample(normal_test_token, len(voice_phishing_test_token))
-    
-
-    normal_train_token_tmp = [' '.join(v)+'\n' for v in normal_train_token]
-    normal_test_token_tmp = [' '.join(v)+'\n' for v in normal_test_token]
-
-    with open('data/duplication_test_data/normal_train.txt', 'w', encoding='UTF8') as f:
-        f.writelines(normal_train_token_tmp)
-    with open('data/duplication_test_data/normal_test.txt', 'w', encoding='UTF8') as f:
-        f.writelines(normal_test_token_tmp)
 
     print("number of normal train data after preprocessing : ",len(voice_phishing_train_token))
     print("number of normal test data after preprocessing : ",len(voice_phishing_test_token))
