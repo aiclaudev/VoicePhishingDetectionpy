@@ -53,9 +53,9 @@ if __name__ == '__main__' :
     voice_phishing_train_token_tmp = [' '.join(v)+'\n' for v in voice_phishing_train_token]
     voice_phishing_test_token_tmp = [' '.join(v)+'\n' for v in voice_phishing_test_token]
 
-    with open('data/augmented_data/voice_train.txt', 'w', encoding='UTF8') as f:
+    with open('data/duplication_test_data/voice_train.txt', 'w', encoding='UTF8') as f:
         f.writelines(voice_phishing_train_token_tmp)
-    with open('data/augmented_data/voice_test.txt', 'w', encoding='UTF8') as f:
+    with open('data/duplication_test_data/voice_test.txt', 'w', encoding='UTF8') as f:
         f.writelines(voice_phishing_test_token_tmp)
     
 
@@ -108,9 +108,9 @@ if __name__ == '__main__' :
     normal_train_token_tmp = [' '.join(v)+'\n' for v in normal_train_token]
     normal_test_token_tmp = [' '.join(v)+'\n' for v in normal_test_token]
 
-    with open('data/augmented_data/normal_train.txt', 'w', encoding='UTF8') as f:
+    with open('data/duplication_test_data/normal_train.txt', 'w', encoding='UTF8') as f:
         f.writelines(normal_train_token_tmp)
-    with open('data/augmented_data/normal_test.txt', 'w', encoding='UTF8') as f:
+    with open('data/duplication_test_data/normal_test.txt', 'w', encoding='UTF8') as f:
         f.writelines(normal_test_token_tmp)
 
     print("number of normal train data after preprocessing : ",len(voice_phishing_train_token))
