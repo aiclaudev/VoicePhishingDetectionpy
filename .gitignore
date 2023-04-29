@@ -1,4 +1,5 @@
 data
 *.pyc
-test.py
+test*.py
 compare_train_test.txt
+fasttext
