@@ -1,4 +1,5 @@
 import pickle
+import math
 import numpy as np
 from gensim.models import FastText
 from numpy import dot
@@ -70,13 +71,6 @@ def evaluate(voice_phishing, normal, threshold, count) :
         else :
             TN += 1
 
-    # print(len(ARL1_lst))
-    # print(len(ARL0_lst))
-    # print(TP)
-    # print(FP)
-    # print(ARL1_lst)
-    # print(ARL0_lst)
-
     if len(ARL1_lst) == 0 :
         ARL1 = 'ARL1_lst==0'
     else :
@@ -86,7 +80,18 @@ def evaluate(voice_phishing, normal, threshold, count) :
     else :
         ARL0 = sum(ARL0_lst)/len(ARL0_lst)
 
-    return {'Acc' : (TP + TN) / (TP + TN + FP + FN), 'Recall' : TP / (TP + FN), 'Precision' : TP / (TP + FP), 'ARL1' : ARL1, 'ARL0' : ARL0}
+    acc = (TP + TN) / (TP + TN + FP + FN)
+    recall = TP / (TP + FN)
+    precision = TP / (TP + FP)
+
+    # Discard the third decimal place
+    acc = math.floor(acc*100)/100
+    recall = math.floor(recall*100)/100
+    precision = math.floor(precision*100)/100
+    ARL1 = math.floor(ARL1*100)/100
+    ARL0 = math.floor(ARL0*100)/100
+
+    print(f'Accuracy : {acc}, Recall : {recall}, Precision : {precision}, ARL1 : {ARL1}, ARL0 : {ARL0}')
 
 def main():
     # Load data
