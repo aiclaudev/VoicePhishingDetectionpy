@@ -89,7 +89,8 @@ def evaluate(voice_phishing, normal, threshold, count) :
     recall = math.floor(recall*100)/100
     precision = math.floor(precision*100)/100
     ARL1 = math.floor(ARL1*100)/100
-    ARL0 = math.floor(ARL0*100)/100
+    if type(ARL0) != str:
+        ARL0 = math.floor(ARL0*100)/100
 
     return f'Accuracy : {acc}, Recall : {recall}, Precision : {precision}, ARL1 : {ARL1}, ARL0 : {ARL0}', acc, recall, precision, ARL1, ARL0, \
         {'Accuracy' : acc, 'Recall' : recall, 'Precision' : precision, 'ARL1' : ARL1, 'ARL0' : ARL0}
