@@ -91,7 +91,7 @@ def evaluate(voice_phishing, normal, threshold, count) :
     ARL1 = math.floor(ARL1*100)/100
     ARL0 = math.floor(ARL0*100)/100
 
-    return f'Accuracy : {acc}, Recall : {recall}, Precision : {precision}, ARL1 : {ARL1}, ARL0 : {ARL0}'
+    return f'Accuracy : {acc}, Recall : {recall}, Precision : {precision}, ARL1 : {ARL1}, ARL0 : {ARL0}', acc, recall, precision, ARL1, ARL0
 
 def main():
     # Load data
@@ -135,8 +135,8 @@ def main():
     voice_phishing_test_EWMA = [EWMA_bias_correction(i, 0.9)[1] for i in voice_phishing_test_time_series]
     normal_test_EWMA = [EWMA_bias_correction(i, 0.9)[1] for i in normal_test_time_series]
 
-    print('Train set : ', evaluate(voice_phishing_train_EWMA, normal_train_EWMA, 0.44, 10))
-    print('Test set : ', evaluate(voice_phishing_test_EWMA, normal_test_EWMA, 0.44, 10))
+    print('Train set : ', evaluate(voice_phishing_train_EWMA, normal_train_EWMA, 0.44, 10)[0])
+    print('Test set : ', evaluate(voice_phishing_test_EWMA, normal_test_EWMA, 0.44, 10)[0])
 
 if __name__ == '__main__':
     main()

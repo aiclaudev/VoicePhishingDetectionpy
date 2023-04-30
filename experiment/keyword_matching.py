@@ -64,7 +64,7 @@ def evaluate_keyword_matching(voice_phishing, normal, keyword) :
     ARL1 = math.floor(ARL1*100)/100
     ARL0 = math.floor(ARL0*100)/100
 
-    return f'Accuracy : {acc}, Recall : {recall}, Precision : {precision}, ARL1 : {ARL1}, ARL0 : {ARL0}'
+    return f'Accuracy : {acc}, Recall : {recall}, Precision : {precision}, ARL1 : {ARL1}, ARL0 : {ARL0}', acc, recall, precision, ARL1, ARL0
 
 def main():
     # Load data
@@ -95,8 +95,8 @@ def main():
     voice_phishing_test_EWMA = [EWMA_bias_correction(i, 0.9)[1] for i in voice_phishing_test_time_series]
     normal_test_EWMA = [EWMA_bias_correction(i, 0.9)[1] for i in normal_test_time_series]
 
-    print('Our method : ', evaluate(voice_phishing_test_EWMA, normal_test_EWMA, 0.425, 9))
-    print('Keyword matching method : ', evaluate_keyword_matching(voice_phishing_test_token, normal_test_token, keywords))
+    print('Our method : ', evaluate(voice_phishing_test_EWMA, normal_test_EWMA, 0.425, 9)[0])
+    print('Keyword matching method : ', evaluate_keyword_matching(voice_phishing_test_token, normal_test_token, keywords)[0])
 
 if __name__ == '__main__':
     main()
