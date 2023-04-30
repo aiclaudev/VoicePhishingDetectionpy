@@ -3,3 +3,4 @@ data
 test*.py
 compare_train_test.txt
 fasttext
+__pycache__
