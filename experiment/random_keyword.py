@@ -6,7 +6,7 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from keyword_matching import evaluate_keyword_matching
-from detect import cos_sim, convrs_to_timeseries, EWMA_bias_correction, evaluate
+from detect import convrs_to_timeseries, EWMA_bias_correction, evaluate
 from gensim.models import FastText
 
 def random_keyword_evaluate(keywords, model, voice_phishing_test_token, normal_test_token, num) :
